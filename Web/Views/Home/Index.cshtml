@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="items-content"></div>
+
+<div>
+    <a href="#" onclick="return false" class="popup">Add New</a>
+</div>
+
+<script>
+    var addItemPopup = new $.Popup();
+
+  
+
+    $('a.popup').click(function() {
+        addItemPopup.open('/Home/Create');
+    });
+
+    updateContent();
+
+    function updateContent() {
+        console.log('updateContent');
+        HttpService.get('/Home/Items')
+            .then(result => {
+                $('#items-content').html(result);
+            });
+    }
+</script>
+
+<script>
+    //=========================== SignalR.Start ============================
+
+    var PoeConnect = $.connection.myHub1;
+
+    $.connection.hub.start().done(function () {
+    });
+
+    PoeConnect.client.update = function () {
+        updateContent();
+    }
+
+    //======================== SignalR.End ============================
+</script>

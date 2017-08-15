@@ -1,0 +1,41 @@
+﻿@model Web.Models.Item
+    
+<div id="create-holder">
+    <div>
+        <h4>Create Item</h4>
+        <hr />
+        <div id="create-form">
+            <div class="create-holder">
+                <div>Url</div>
+                <input id="item_url" class="input" type="text" />
+            </div>
+
+            <div class="create-holder">
+                <div>Comment</div>
+                <input id="item_comment" class="input" type="text" />
+            </div>
+
+            <div class="create-holder">
+                <div>
+                    <input onclick="itemSend()" type="submit" value="Зарегистрировать" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function itemSend() {
+        var url = $('#item_url').val();
+        var comment = $('#item_comment').val();
+
+        var data = JSON.stringify({
+            Url: url,
+            Comment: comment
+        })
+        HttpService.post("/Home/Create", data)
+            .then(res => {
+                addItemPopup.close();
+            });
+    }
+</script>

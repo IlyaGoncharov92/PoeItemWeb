@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Web.Models.Item>
+
+<table class="items-table">
+    @foreach (var item in Model)
+    {
+        <tr class="item-@item.Id">
+            <td>
+                <div class="item-container">
+                    <div class="image">
+
+                    </div>
+                    <div class="item">
+                        <div class="item-child url">
+                            <a href="@item.Url" target="_blank">@item.Url</a>
+                        </div>
+                        <div class="item-child comment">
+                            <span>@item.Comment</span>
+                        </div>
+                        @{
+                            var value = (item.CountNewDetails > 0) ? "active" : "inactive";
+
+                            <div class="item-child detail @value" onclick="openDetail(@item.Id)">
+                                <span>@item.CountNewDetails</span>
+                            </div>
+                        }
+                        <div class="item-child delete" onclick="deleteItem(@item.Id)">
+                            x
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    function deleteItem(itemId) {
+        var value = $.param({ 'itemId': itemId });
+        HttpService.get('/Home/Delete', `/?${value}`)
+            .then(result => {
+                updateContent();
+            });
+    }
+
+    function openDetail(itemId) {
+        var value = $.param({ 'itemId': itemId });
+        addItemPopup.open('/Home/ItemDetail/?' + value);
+    }
+</script>

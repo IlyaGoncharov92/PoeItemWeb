@@ -1,0 +1,124 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.items-table {
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.items-table td {
+    padding-top: 5px;
+}
+
+.items-table .item-container {
+    height: 40px;
+    width: 100%;   
+    box-shadow: 0 0 1px #9c9c9c;
+}
+
+.items-table .item-container:hover {
+    transition: .3s;
+    box-shadow: 0 0 1px black;
+}
+
+.item-container .image {
+    height: 100%;
+    width: 40px;
+    float: left;
+}
+
+.item-container .item {
+    height: 100%;
+    width: calc(100% - 46px);
+    float: right;
+}
+
+.item .item-child {
+    float: left;
+    margin-left: 10px;
+}
+
+.item .url {
+    margin-top: 8px;
+    width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item .comment {
+    margin-top: 8px;
+    width: 310px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item .detail {
+    width: 40px;
+    height: 100%;
+    cursor: pointer;
+    text-align: center;
+}
+
+.item .detail.active {
+    background: rgb(7, 243, 43)
+}
+
+.item .detail.inactive {
+    background: rgb(119, 119, 127);
+}
+
+.item .detail span {
+    position: relative;
+    top: 7px;
+}
+
+.item .delete {
+    width: 40px;
+    height: 100%;
+    cursor: pointer;
+    padding-left: 27px;
+}
+
+/*-------------- Detail ----------------*/
+
+#detail-holder {
+    width: 600px;
+    height: 80%;
+}
+
+
+/*------------------------------*/
+
+#create-holder {
+    width: 400px;
+    height: 380px;
+}
+
+#create-form {
+    
+}
+
+.create-holder {
+    padding: 15px;
+}
+
+.create-holder .input {
+    width: 250px;
+}

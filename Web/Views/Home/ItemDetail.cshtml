@@ -1,0 +1,25 @@
+﻿@model Web.Models.Item
+    
+<div id="detail-holder">
+    <div>
+        <a href="@Model.Url" target="_blank" >@Model.Url</a>
+        <hr />
+        <table class="detail-table">
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    $('.popup_cont').css('height', '80%');
+    $('.popup_cont .popup').css('height', '100%');
+    addItemPopup.center();
+
+    /*
+    setTimeout(function() {
+        console.log('time')
+        addItemPopup.center();
+    }, 10000)*/
+</script>
