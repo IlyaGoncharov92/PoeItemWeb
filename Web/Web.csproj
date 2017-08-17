@@ -211,7 +211,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="audio\finished-task.wav" />
+    <Content Include="audio\gesture.wav" />
+    <Content Include="audio\oringz-w445.wav" />
     <Content Include="audio\synthetic.wav" />
+    <Content Include="audio\timmy.wav" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
