@@ -1,0 +1,1 @@
+﻿var audio1 = new Audio('/audio/synthetic.wav');
