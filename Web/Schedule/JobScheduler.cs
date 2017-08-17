@@ -20,7 +20,7 @@ namespace Web.Schedule
             var updateItemsTrigger = TriggerBuilder
                     .Create()
                     .StartAt(DateBuilder.FutureDate(5, IntervalUnit.Second))
-                    .WithSimpleSchedule(x => x.WithIntervalInSeconds(30).RepeatForever())
+                    .WithSimpleSchedule(x => x.WithIntervalInSeconds(20).RepeatForever())
                     .Build();
 
             scheduler.ScheduleJob(updateItemsJob, updateItemsTrigger);

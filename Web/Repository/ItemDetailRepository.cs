@@ -10,7 +10,7 @@ namespace Web.Repository
 {
     public class ItemDetailRepository
     {
-        private const int _deleteMaxCount = 30;
+        private const int _deleteMaxCount = 10;
 
         public void AddRange(List<ItemDetail> items)
         {
@@ -28,7 +28,7 @@ namespace Web.Repository
             }
         }
 
-        public void UpdateAllDelete(List<ItemDetail> items)
+        public void UpdateAllDelete(IEnumerable<ItemDetail> items)
         {
             using (var context = new PoeContext())
             {
@@ -65,7 +65,7 @@ namespace Web.Repository
 
         //--------------- EF ----------------
 
-        public void UpdateAllDeleteEF(List<ItemDetail> items)
+        public void UpdateAllDeleteEF(IEnumerable<ItemDetail> items)
         {
             using (var context = new PoeContext())
             {

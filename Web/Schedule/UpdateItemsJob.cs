@@ -15,6 +15,7 @@ namespace Web.Schedule
     public class UpdateItemsJob : IJob
     {
         private readonly string _poeTradeHost;
+        private readonly string _poeWikiHost;
         private readonly ItemRepository _itemRepository;
         private readonly ItemDetailRepository _itemDetailRepository;
         private readonly UserRepository _userRepository;
@@ -22,6 +23,7 @@ namespace Web.Schedule
         public UpdateItemsJob()
         {
             _poeTradeHost = ConfigurationManager.AppSettings["PoeTradeHost"];
+            _poeWikiHost = ConfigurationManager.AppSettings["PoeWikiHost"];
             _itemRepository = new ItemRepository();
             _itemDetailRepository = new ItemDetailRepository();
             _userRepository = new UserRepository();
@@ -52,14 +54,12 @@ namespace Web.Schedule
                 {
                     try
                     {
-                        var html = RestHelper.HttpGet(_poeTradeHost, item.UrlParams);
-
-                        if (string.IsNullOrEmpty(html))
-                            continue;
-
                         var oldDetails = item.ItemDetails.ToList();
-                        var newDetails = GetDetails(html, item.Id);
+                        var newDetails = GetDetails(item);
 
+                        var wikiLink = newDetails.FirstOrDefault()?.WikiLink;
+                        UpdateWikiImage(item, wikiLink);
+                        
                         oldDetails = UpdateOlDetails(oldDetails, newDetails);
                         newDetails = UpdateNewDetails(oldDetails, newDetails);
 
@@ -118,33 +118,73 @@ namespace Web.Schedule
             return oldDetails;
         }
 
-        private List<ItemDetail> GetDetails(string html, int itemId)
+        private void UpdateWikiImage(Item item, string wikiLink)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(item.ImageWikiHtml) && !string.IsNullOrEmpty(wikiLink))
+                {
+                    var urlParams = UrlParseHelper.UrlWikiParse(wikiLink);
+
+                    var html = RestHelper.HttpGet(_poeWikiHost, urlParams);
+
+                    if (string.IsNullOrEmpty(html))
+                        return;
+
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(html);
+
+                    var cotainer = doc.GetElementbyId("mw-content-text");
+
+                    var elem = cotainer.Descendants("span")
+                        .FirstOrDefault(d => d.GetAttributeValue("class", "").Contains("infobox-page-container"));
+
+                    var elem2 = elem?.FirstChild.InnerHtml;
+
+                    _itemRepository.UpdateWikiImage(item.Id, elem2);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(e);
+            }
+        }
+
+        private List<ItemDetail> GetDetails(Item item)
         {
             var list = new List<ItemDetail>();
 
             try
             {
+                var html = RestHelper.HttpGet(_poeTradeHost, item.UrlParams);
+
+                if (string.IsNullOrEmpty(html))
+                    return list;
+
                 var doc = new HtmlDocument();
                 doc.LoadHtml(html);
                 var elem = doc.GetElementbyId("search-results-first");
                 if (elem != null)
                 {
                     var htmlNodes = elem.ChildNodes.Where(x => x.Name == "tbody");
-
+                    
                     foreach (var htmlNode in htmlNodes)
                     {
-                        var message = ItemDetailNodeHelper.GetMessage(htmlNode);
-
-                        var liNodes = ItemDetailNodeHelper.GetLiNodes(htmlNode).ToList();
+                        var liNodes = ItemDetailNodeHelper.GetLiNodes(htmlNode).ToList(); 
 
                         var itemDetail = new ItemDetail
                         {
                             TradeId = ItemDetailNodeHelper.GetItemId(htmlNode),
-                            Price = ItemDetailNodeHelper.GetPrice(liNodes),
+                            Price = ItemDetailNodeHelper.GetPrice(htmlNode),
                             UserName = ItemDetailNodeHelper.GetUserName(liNodes),
+                            ItemHtml = ItemDetailNodeHelper.GetHtml(htmlNode),
+                            Message = ItemDetailNodeHelper.GetMessage(htmlNode),
+                            TimeAgo = ItemDetailNodeHelper.GetTimeAge(htmlNode),
+                            WikiLink = ItemDetailNodeHelper.GetWikiLink(htmlNode),
+                            ItemName = ItemDetailNodeHelper.GetItemName(htmlNode),
                             IsVerified = false,
-                            Message = message,
-                            ItemId = itemId
+                            ItemId = item.Id
                         };
 
                         list.Add(itemDetail);

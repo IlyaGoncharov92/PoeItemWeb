@@ -63,17 +63,64 @@ namespace Web.Helpers
             return userName;
         }
 
-        public static string GetPrice(List<HtmlNode> liNodes)
+        public static string GetPrice(HtmlNode htmlNode)
         {
-            var span1 = liNodes[0]?.ChildNodes.FirstOrDefault(x => x.Name == "span");
-            var span2 = span1?.ChildNodes.FirstOrDefault(x => x.Name == "span");
-            var price = span2?.InnerText;
+            var price = htmlNode.Attributes
+                            .FirstOrDefault(x => x.Name == "data-buyout")?.Value;
             return price ?? string.Empty;
         }
 
         public static string GetItemId(HtmlNode htmlNode)
         {
-            return htmlNode.Attributes["class"].Value;
+            var result = htmlNode.Attributes["class"].Value;
+            return result ?? string.Empty;
+        }
+
+        public static string GetHtml(HtmlNode htmlNode)
+        {
+            var itemHtml = htmlNode.Descendants("ul")
+                .FirstOrDefault(d => d.GetAttributeValue("class", "").Contains("item-mods"))?.InnerHtml;
+            return itemHtml ?? string.Empty;
+        }
+
+        public static string GetTimeAge(HtmlNode htmlNode)
+        {
+            var result = htmlNode.Descendants("span")
+                .FirstOrDefault(d => d.GetAttributeValue("class", "").Contains("found-time-ago"))?.InnerText;
+
+            return result ?? string.Empty;
+        }
+
+        public static string GetWikiLink(HtmlNode htmlNode)
+        {
+            var result = htmlNode.Descendants("a")
+                .FirstOrDefault(d => d.GetAttributeValue("class", "").Contains("wiki-link"))
+                ?.Attributes["href"].Value;
+
+            return result ?? string.Empty;
+        }
+
+        public static string GetItemName(HtmlNode htmlNode)
+        {
+            var test2 = htmlNode.ChildNodes.Where(x => x.Name == "tr");
+            var test3 = test2?.FirstOrDefault(x => x.Attributes["class"].Value == "first-line");
+            var test4 = test3?.ChildNodes.Where(x => x.Name == "td");
+            var test5 = test4?.FirstOrDefault(x => x.Attributes["class"].Value == "item-cell");
+            var result = test5?.Descendants("a").FirstOrDefault()?.InnerText;
+
+            return result;
+        }
+
+        public static string GetImagePath(IEnumerable<HtmlNode> htmlNodes)
+        {
+            var test1 = htmlNodes.FirstOrDefault();
+            var test2 = test1?.ChildNodes.Where(x => x.Name == "tr");
+            var test3 = test2?.FirstOrDefault(x => x.Attributes["class"].Value == "first-line");
+            var test4 = test3?.ChildNodes.Where(x => x.Name == "td");
+            var test5 = test4?.FirstOrDefault(x => x.Attributes["class"].Value == "icon-td");
+            var result = test5?.Descendants("img").FirstOrDefault()?.Attributes["src"].Value;
+
+            return result;
         }
     }
 }

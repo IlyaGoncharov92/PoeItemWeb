@@ -83,6 +83,23 @@ namespace Web.Repository
             }
         }
 
+        public void UpdateWikiImage(int id, string imageHtml)
+        {
+            using (var context = new PoeContext())
+            {
+                var item = context.Items.FirstOrDefault(x => x.Id == id);
+
+                if (item != null)
+                {
+                    item.ImageWikiHtml = imageHtml;
+
+                    context.Items.Attach(item);
+                    context.Entry(item).Property(x => x.ImageWikiHtml).IsModified = true;
+                    context.SaveChanges();
+                }
+            }
+        }
+
         public void Detele(int id)
         {
             using (var context = new PoeContext())

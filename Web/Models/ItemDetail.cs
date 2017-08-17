@@ -13,12 +13,16 @@ namespace Web.Models
         public string TradeId { get; set; }
         public string UserName { get; set; }
         public string Price { get; set; }
+        public string Message { get; set; }
+        public string ItemHtml { get; set; }
+        public string ItemName { get; set; }
+        public string TimeAgo { get; set; }
+        public string WikiLink { get; set; }
+
         public bool IsVerified { get; set; }
         public int DeleteNumber { get; set; }
-        public string Message { get; set; }
-
         [ForeignKey("Item")]
         public int ItemId { get; set; }
-        public Item Item { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

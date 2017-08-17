@@ -1,20 +1,111 @@
 ﻿@model Web.Models.Item
     
+
+@*<span class="header -double">Divinarius<br>Imperial Skean</span><span class="item-stats">
+    <span class="group">
+        <em class="tc -default">Daggers</em><br><em class="tc -default">Quality: <em class="tc -mod">+20%</em></em><br><em class="tc -default">
+            Physical Damage: <em class="tc -value">
+                <em class="tc -mod">22.8</em>&#8211;<em class="tc -mod">91.2</em>
+            </em>
+        </em><br><em class="tc -default">
+            Critical Strike Chance: <em class="tc -value">
+                <em class="tc -value">6.30%</em>
+            </em>
+        </em><br><em class="tc -default">
+            Attacks per Second: <em class="tc -value">
+                <em class="tc -value">1.45</em>
+            </em>
+        </em><br><em class="tc -default">
+            Weapon Range: <em class="tc -value">
+                <em class="tc -value">8</em>
+            </em>
+        </em>
+    </span><span class="group">
+        <em class="tc -default">
+            Requires Level <em class="tc -value"><em class="tc -value">66</em></em>, <em class="tc -value"><em class="tc -value">95</em></em> Dex, <em class="tc -value"><em class="tc -value">131</em></em> Int
+        </em>
+    </span><span class="group -textwrap tc -mod">
+        30% increased Global <a href="/Critical_Strike_Chance" class="mw-redirect"
+                                title="Critical Strike Chance">Critical Strike Chance</a>
+    </span><span class="group -textwrap tc -mod">
+        (50-70)% increased <a href="/Spell_Damage" class="mw-redirect" title="Spell Damage">Spell Damage</a><br>(80-100)% increased
+        <a href="/Critical_Strike_Chance" class="mw-redirect" title="Critical Strike Chance">Critical Strike Chance</a> for <a href="/Spell" title="Spell">Spells</a><br>+10 <a href="/Life" title="Life">Life</a> gained on
+        <a href="/Kill"
+           title="Kill">Kill</a><br>+5 <a href="/Mana" title="Mana">Mana</a> gained on <a href="/Kill" title="Kill">Kill</a><br>10% increased Area of Effect of Area
+        <a href="/Skill" class="mw-redirect" title="Skill">Skills</a>
+    </span><span class="group -textwrap tc -flavour">Divine intervention feels better<br>when you do it yourself.</span>
+</span><a href="/File:Divinarius_inventory_icon.png" class="image">
+    <img alt="Divinarius inventory icon.png"
+         src="https://pathofexile.gamepedia.com/media/pathofexile.gamepedia.com/5/51/Divinarius_inventory_icon.png?version=9607242a89705c4d37cbee892c246bd2"
+         width="78" height="234">
+</a>*@
+
 <div id="detail-holder">
     <div>
         <a href="@Model.Url" target="_blank" >@Model.Url</a>
         <hr />
+        <div id="detail-image">
+            
+        </div>
         <table class="detail-table">
             <tr>
-                <td></td>
+                <td>
+                    <div class="details-info">
+                        <ul>
+                            <li class="bullet-item">
+                                <ul class="mods withline">
+                                    <li class="sortable " data-name="#(implicit) #% increased Global Critical Strike Chance"
+                                        data-value="30.0" style="">
+                                        <b>30</b>% increased Global Critical Strike Chance
+                                    </li>
+                                </ul>
+                                <ul class="mods">
+                                    <li class="sortable " data-name="##% increased Spell Damage" data-value="50.0" style="">
+                                        <b>50</b>%
+                                        increased Spell Damage
+                                    </li>
+                                    <li class="sortable " data-name="##% increased Critical Strike Chance for Spells" data-value="82.0"
+                                        style="">
+                                        <b>82</b>% increased Critical Strike Chance for Spells
+                                    </li>
+                                    <li class="sortable " data-name="#+# Life gained on Kill" data-value="10.0" style="">
+                                        +<b>10</b> Life
+                                        gained on Kill
+                                    </li>
+                                    <li class="sortable " data-name="#+# Mana gained on Kill" data-value="5.0" style="">
+                                        +<b>5</b> Mana
+                                        gained on Kill
+                                    </li>
+                                    <li class="sortable " data-name="##% increased Area of Effect of Area Skills" data-value="10.0"
+                                        style="">
+                                        <b>10</b>% increased Area of Effect of Area Skills
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        ZZZZZZZZZZZZZZ
+                    </div>
+
+                </td>
             </tr>
         </table>
     </div>
 </div>
 
 <script>
+    var value1 = '@Model.ImageWikiHtml';
+    $(document).ready(function () {
+        var html = $.parseHTML(value1)
+        $('#detail-image').html(html[0].data);
+    });
+
+    $('.popup').css('overflow', 'overlay');
     $('.popup_cont').css('height', '80%');
+    $('.popup_cont').css('width', '80%');
     $('.popup_cont .popup').css('height', '100%');
+    $('.popup_cont .popup').css('width', '100%');
     addItemPopup.center();
 
     /*

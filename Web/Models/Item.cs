@@ -23,6 +23,8 @@ namespace Web.Models
         public int CountNewDetails { get; set; }
         public DateTime CreatedDate { get; set; }
         public virtual ICollection<ItemDetail> ItemDetails { get; set; }
+        
+        public string ImageWikiHtml { get; set; }
 
         [ForeignKey("User")]
         public string UserId { get; set; }

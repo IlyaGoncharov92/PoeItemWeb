@@ -10,16 +10,23 @@ namespace Web.Repository
     {
         public void AddConnect(string userId, string connectionId)
         {
-            using (var context = new PoeContext())
+            try
             {
-                var connect = new UserConnection
+                using (var context = new PoeContext())
                 {
-                    ConnectionId = connectionId,
-                    UserId = userId
-                };
+                    var connect = new UserConnection
+                    {
+                        ConnectionId = connectionId,
+                        UserId = userId
+                    };
 
-                context.UserConnections.Add(connect);
-                context.SaveChanges();
+                    context.UserConnections.Add(connect);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(e);
             }
         }
 

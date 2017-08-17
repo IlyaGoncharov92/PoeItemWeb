@@ -23,5 +23,21 @@ namespace Web.Helpers
 
             return urlParams;
         }
+
+        public static string UrlWikiParse(string url)
+        {
+            var wikiHost = ConfigurationManager.AppSettings["PoeWikiHost"];
+
+            var indexStart = url.IndexOf(wikiHost, StringComparison.Ordinal);
+
+            if (indexStart == -1)
+                return string.Empty;
+
+            var indexEnd = indexStart + wikiHost.Length;
+
+            var urlParams = url.Substring(indexEnd);
+
+            return urlParams;
+        }
     }
 }
