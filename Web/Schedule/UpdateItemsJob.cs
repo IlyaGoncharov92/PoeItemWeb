@@ -43,6 +43,7 @@ namespace Web.Schedule
 
         public void Start()
         {
+            Logger.Log.Debug("TESET");
             var users = _userRepository.GetAll();
 
             foreach (var user in users)
@@ -90,7 +91,7 @@ namespace Web.Schedule
 
                 if (isCounNew)
                 {
-                    PushHub.Send(user.Id);
+                    PushHub.Send(user.Id, isCounNew);
                 }
             }
 

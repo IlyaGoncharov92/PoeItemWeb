@@ -16,6 +16,7 @@ namespace Web
         {
             // Code that runs on application startup
             Logger.InitLogger();
+            Logger.Log.Debug("TESET");
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);            

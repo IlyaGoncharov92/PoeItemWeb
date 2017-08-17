@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -57,9 +58,11 @@ namespace Web.Controllers
         [HttpGet]
         public ActionResult ItemDetail(int itemId)
         {
-            var itemDetails = _itemRepository.GetById(itemId);
+            var item = _itemRepository.GetById(itemId);
 
-            return PartialView(itemDetails);
+            Task.Run(() => _itemRepository.Verified(item.Id));
+
+            return PartialView(item);
         }
     }
 }

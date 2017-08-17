@@ -99,33 +99,48 @@ textarea {
 /*-------------- Detail ----------------*/
 
 #detail-holder {
-    width: 80%;
     height: 80%;
 }
 
-.details-info {
-    padding: 5px;
+.detail-table {
+    float: right;
+    width: calc(95% - 300px);
 }
+
+.details-info {
+    
+}
+
+.detail-ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.detail-li {
+    display: -webkit-inline-box;
+    border: 1px solid #bbbbbb;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    padding: 3px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.detail-li.verified {
+    opacity: 0.3;
+}
+
+/*-------- letf image --------*/
 
 .bullet-item {
     font-size: 12px;
-    background-color: #222;
     padding: 5px;
     margin-bottom: 30px;
-    color: white;
-    float: left;
+    width: 50%;
 }
 
-.detail-statistic {
-    float: right;
-    width: 200px;
-}
-
-.mods.withline {
-    border-bottom: 1px solid #cccccc;
-}
-
-.detail-table ul {
+.bullet-item ul {
     font-size: 1em;
     line-height: 1.6;
     margin-bottom: 1.25em;
@@ -135,6 +150,40 @@ textarea {
     padding: 0;
     list-style-type: none;
 }
+
+.bullet-item .mods.withline {
+    border-bottom: 1px solid #bfbfbf;
+}
+
+/*-------- right stats --------*/
+
+.detail-statistic {
+    border-left: 1px solid #a5a5a5;
+    padding-left: 5px;
+}
+
+.detail-statistic ul {
+    font-size: 1em;
+    line-height: 1.6;
+    margin-bottom: 1.25em;
+    list-style-position: outside;
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.detail-statistic li {
+    
+}
+
+.li-name {
+    font-size: 18px;
+    color: #c3a400;
+    margin-bottom: 5px;
+}
+
+/*-------------- left image ------------*/
 
 #detail-image {
     width: 300px;

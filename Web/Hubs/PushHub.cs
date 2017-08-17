@@ -18,13 +18,13 @@ namespace Web.Hubs
             ConnectRepository = new UserConnectRepository();
         }
 
-        public static void Send(string userId)
+        public static void Send(string userId, bool isNew)
         {
             var connectIds = ConnectRepository.GetUserConnections(userId);
 
             foreach (var connectId in connectIds)
             {
-                HubContext.Clients.Client(connectId).Update();
+                HubContext.Clients.Client(connectId).Update(isNew);
             }
         }
     }

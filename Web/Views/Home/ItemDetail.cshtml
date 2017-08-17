@@ -1,42 +1,4 @@
 ﻿@model Web.Models.Item
-    
-@{
-    var html = Model.ItemDetails.First().ItemHtml;
-
-    var t = 12;
-}
-
-
-@*<li class="bullet-item">
-    <ul class="mods withline">
-        <li class="sortable " data-name="#(implicit) #% increased Global Critical Strike Chance"
-            data-value="30.0" style="">
-            <b>30</b>% increased Global Critical Strike Chance
-        </li>
-    </ul>
-    <ul class="mods">
-        <li class="sortable " data-name="##% increased Spell Damage" data-value="50.0" style="">
-            <b>50</b>%
-            increased Spell Damage
-        </li>
-        <li class="sortable " data-name="##% increased Critical Strike Chance for Spells" data-value="82.0"
-            style="">
-            <b>82</b>% increased Critical Strike Chance for Spells
-        </li>
-        <li class="sortable " data-name="#+# Life gained on Kill" data-value="10.0" style="">
-            +<b>10</b> Life
-            gained on Kill
-        </li>
-        <li class="sortable " data-name="#+# Mana gained on Kill" data-value="5.0" style="">
-            +<b>5</b> Mana
-            gained on Kill
-        </li>
-        <li class="sortable " data-name="##% increased Area of Effect of Area Skills" data-value="10.0"
-            style="">
-            <b>10</b>% increased Area of Effect of Area Skills
-        </li>
-    </ul>
-</li>*@
 
 <div id="detail-holder">
     <div>
@@ -49,21 +11,50 @@
             <tr>
                 <td>
                     <div class="details-info">
-                        <ul>
-                            @foreach (var detail in Model.ItemDetails)
-                            {
-                                <li>
-                                    <div class="detail-statistic">
-                                        @detail.ItemName
-                                        @detail.UserName
-                                        @detail.Price
-                                        @detail.TimeAgo
-                                        @detail.WikiLink
-                                    </div>
-                                    <div class="bullet-item">
-                                        @Html.Raw(detail.ItemHtml)
-                                    </div>
-                                </li>
+                        <ul class="detail-ul">
+                            @{
+                                try
+                                {
+                                    var test = Model.ItemDetails;
+
+                                    foreach (var detail in Model.ItemDetails)
+                                    {
+                                        var verified = detail.IsVerified ? "verified" : "";
+
+                                        <li class="detail-li @verified">
+                                            <div class="bullet-item">
+                                                @Html.Raw(detail.ItemHtml)
+                                            </div>
+                                            <div class="detail-statistic">
+                                                <ul>
+                                                    <li class="li-name">
+                                                        @detail.ItemName
+                                                    </li>
+                                                    <li>
+                                                        <span>Name: </span>
+                                                        <span>@detail.UserName</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>Price: </span>
+                                                        <span>@detail.Price</span>
+                                                    </li>
+                                                    <li>
+                                                        @detail.TimeAgo
+                                                    </li>
+                                                    <li>
+                                                        <a href="@detail.WikiLink" target="_blank">Wiki</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" onclick="return false;" class="btn-copy" data-clipboard-text="@detail.Message">Copied to clipboard</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                }
                             }
                         </ul>
                     </div>
@@ -82,14 +73,10 @@
 
     $('.popup').css('overflow', 'overlay');
     $('.popup_cont').css('height', '80%');
-    $('.popup_cont').css('width', '80%');
+    $('.popup_cont').css('width', '1100px');
     $('.popup_cont .popup').css('height', '100%');
     $('.popup_cont .popup').css('width', '100%');
     addItemPopup.center();
 
-    /*
-    setTimeout(function() {
-        console.log('time')
-        addItemPopup.center();
-    }, 10000)*/
+    var clipboard = new Clipboard('.btn-copy');
 </script>

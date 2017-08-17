@@ -42,7 +42,15 @@ namespace Web.Repository
                 var result = context.Items
                     .Include(x => x.ItemDetails)
                     .FirstOrDefault(x => x.Id == id);
+                
+                var details = context.ItemDetails
+                    .Where(x => x.ItemId == id)
+                    .OrderBy(x => x.IsVerified)
+                    .Take(20);
 
+                if(result != null)
+                    result.ItemDetails = details.ToList();
+                
                 return result;
             }
         }
@@ -111,6 +119,34 @@ namespace Web.Repository
                     context.Items.Remove(item);
                     context.SaveChanges();
                 }
+            }
+        }
+
+        public void Verified(int itemId)
+        {
+            using (var context = new PoeContext())
+            {
+                var details = context.ItemDetails
+                    .Where(x => x.ItemId == itemId)
+                    .Where(x => !x.IsVerified)
+                    .ToList();
+
+                foreach (var detail in details)
+                {
+                    detail.IsVerified = true;
+                    context.ItemDetails.Attach(detail);
+                    context.Entry(detail).Property(x => x.IsVerified).IsModified = true;
+                }
+
+                var item = context.Items.FirstOrDefault(x => x.Id == itemId);
+                if (item != null)
+                {
+                    item.CountNewDetails = 0;
+                    context.Items.Attach(item);
+                    context.Entry(item).Property(x => x.CountNewDetails).IsModified = true;
+                }
+
+                context.SaveChanges();
             }
         }
     }

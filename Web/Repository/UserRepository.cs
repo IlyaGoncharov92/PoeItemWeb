@@ -14,7 +14,7 @@ namespace Web.Repository
         {
             using (var context = new PoeContext())
             {
-                var result = context.Users
+                var users = context.Users
                     .Select(x => new UserDetails
                     {
                         Id = x.Id,
@@ -22,7 +22,17 @@ namespace Web.Repository
                     })
                 .ToList();
 
-                return result;
+                var details = context.ItemDetails.ToList();
+
+                foreach (var user in users)
+                {
+                    foreach (var item in user.Items)
+                    {
+                        item.ItemDetails = details.Where(x => x.ItemId == item.Id).ToList();
+                    }
+                }
+                
+                return users;
             }
         }
     }

@@ -9,23 +9,8 @@
     <a href="#" onclick="return false" class="popup">Add New</a>
 </div>
 
-
-<style>
-    
-
-
-
-
-</style>
-
-
-
-
-
 <script>
     var addItemPopup = new $.Popup();
-
-
 
     $('a.popup').click(function () {
         addItemPopup.open('/Home/Create');
@@ -40,6 +25,10 @@
                 $('#items-content').html(result);
             });
     }
+
+    function Play() {
+        
+    }
 </script>
 
 <script>
@@ -50,7 +39,8 @@
     $.connection.hub.start().done(function () {
     });
 
-    PoeConnect.client.update = function () {
+    PoeConnect.client.update = function (isNew) {
+        console.log('isNew', isNew);
         updateContent();
     }
 
