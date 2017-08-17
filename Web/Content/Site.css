@@ -104,13 +104,21 @@ textarea {
 }
 
 .details-info {
-    background-color: #222;
-    color: white;
     padding: 5px;
 }
 
 .bullet-item {
     font-size: 12px;
+    background-color: #222;
+    padding: 5px;
+    margin-bottom: 30px;
+    color: white;
+    float: left;
+}
+
+.detail-statistic {
+    float: right;
+    width: 200px;
 }
 
 .mods.withline {

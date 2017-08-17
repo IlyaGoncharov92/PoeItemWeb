@@ -15,14 +15,13 @@ namespace Web.Repository
             using (var context = new PoeContext())
             {
                 var result = context.Users
-                    .Include(x => x.Items.Select(y => y.ItemDetails))
                     .Select(x => new UserDetails
                     {
                         Id = x.Id,
                         Items = x.Items
                     })
                 .ToList();
-                
+
                 return result;
             }
         }

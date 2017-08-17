@@ -78,8 +78,9 @@ namespace Web.Helpers
 
         public static string GetHtml(HtmlNode htmlNode)
         {
-            var itemHtml = htmlNode.Descendants("ul")
-                .FirstOrDefault(d => d.GetAttributeValue("class", "").Contains("item-mods"))?.InnerHtml;
+            var itemHtml = htmlNode.Descendants("li")
+                .FirstOrDefault(d => d.GetAttributeValue("class", "").Contains("bullet-item"))?.InnerHtml;
+
             return itemHtml ?? string.Empty;
         }
 

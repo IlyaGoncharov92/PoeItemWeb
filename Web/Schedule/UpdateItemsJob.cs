@@ -54,7 +54,15 @@ namespace Web.Schedule
                 {
                     try
                     {
-                        var oldDetails = item.ItemDetails.ToList();
+                        var oldDetails = new List<ItemDetail>();
+                        try
+                        {
+                            oldDetails = item.ItemDetails.ToList();
+                        }
+                        catch (Exception e)
+                        {
+                        }
+
                         var newDetails = GetDetails(item);
 
                         var wikiLink = newDetails.FirstOrDefault()?.WikiLink;
