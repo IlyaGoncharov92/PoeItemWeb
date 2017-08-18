@@ -12,42 +12,17 @@ using Microsoft.Owin;
 
 namespace Web.Models
 {
-    public class PoeContext : IdentityDbContext<ApplicationUser>
+    public class PoeContext : DbContext
     {
-        public PoeContext() : base("PoeContext") { }
-
-        public static PoeContext Create()
+        public PoeContext() : base("PoeContext")
         {
-            return new PoeContext();
+            
         }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Token> Tokens { get; set; }
         public DbSet<UserConnection> UserConnections { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemDetail> ItemDetails { get; set; }
-    }
-
-    public class ApplicationUser : IdentityUser
-    {
-        public ApplicationUser()
-        {
-            UserConnections = new List<UserConnection>();
-            Items = new List<Item>();
-        }
-        
-        public virtual ICollection<UserConnection> UserConnections { get; set; }
-        public virtual ICollection<Item> Items { get; set; }
-    }
-
-    public class ApplicationUserManager : UserManager<ApplicationUser>
-    {
-        public ApplicationUserManager(IUserStore<ApplicationUser> store) : base(store)
-        {
-        }
-
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
-        {
-            var db = context.Get<PoeContext>();
-            return new ApplicationUserManager(new UserStore<ApplicationUser>(db));
-        }
     }
 }

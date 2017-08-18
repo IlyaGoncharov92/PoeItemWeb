@@ -13,6 +13,6 @@ namespace Web.Models
         }
 
         public string Id { get; set; }
-        public virtual IEnumerable<Item> Items { get; set; }
+        public IEnumerable<Item> Items { get; set; }
     }
 }

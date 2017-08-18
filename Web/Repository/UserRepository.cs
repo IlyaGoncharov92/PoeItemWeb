@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using Microsoft.AspNet.Identity.Owin;
 using Web.Models;
 
 namespace Web.Repository
@@ -12,27 +10,48 @@ namespace Web.Repository
     {
         public List<UserDetails> GetAll()
         {
-            using (var context = new PoeContext())
+            try
             {
-                var users = context.Users
-                    .Select(x => new UserDetails
-                    {
-                        Id = x.Id,
-                        Items = x.Items
-                    })
-                .ToList();
-
-                var details = context.ItemDetails.ToList();
-
-                foreach (var user in users)
+                using (var context = new PoeContext())
                 {
-                    foreach (var item in user.Items)
+                    var test = context.Items.ToList();
+
+                    var test2 = context.Users.Include(x => x.Items).ToList();
+
+                    var test4 = context.Users
+                        .Include(x => x.Items)
+                        .Select(x => new
+                        {
+                            Id = x.Id,
+                            Items = x.Items
+                        })
+                        .ToList();
+
+                    var users = context.Users
+                        .Select(x => new UserDetails
+                        {
+                            Id = x.Id,
+                            Items = x.Items.ToList()
+                        })
+                    .ToList();
+
+                    var details = context.ItemDetails.ToList();
+
+                    foreach (var user in users)
                     {
-                        item.ItemDetails = details.Where(x => x.ItemId == item.Id).ToList();
+                        foreach (var item in user.Items)
+                        {
+                            item.ItemDetails = details.Where(x => x.ItemId == item.Id).ToList();
+                        }
                     }
+
+                    return users;
                 }
-                
-                return users;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
             }
         }
     }

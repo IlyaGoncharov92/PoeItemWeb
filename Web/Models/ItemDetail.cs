@@ -23,6 +23,6 @@ namespace Web.Models
         public int DeleteNumber { get; set; }
         [ForeignKey("Item")]
         public int ItemId { get; set; }
-        public virtual Item Item { get; set; }
+        public Item Item { get; set; }
     }
 }

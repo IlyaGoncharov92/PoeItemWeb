@@ -22,12 +22,12 @@ namespace Web.Models
         public string Comment { get; set; }
         public int CountNewDetails { get; set; }
         public DateTime CreatedDate { get; set; }
-        public virtual ICollection<ItemDetail> ItemDetails { get; set; }
+        public IEnumerable<ItemDetail> ItemDetails { get; set; }
         
         public string ImageWikiHtml { get; set; }
 
         [ForeignKey("User")]
         public string UserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public User User { get; set; }
     }
 }

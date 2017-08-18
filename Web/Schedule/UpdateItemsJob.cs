@@ -33,7 +33,7 @@ namespace Web.Schedule
         {
             try
             {
-                Start();
+                //Start();
             }
             catch (Exception e)
             {
